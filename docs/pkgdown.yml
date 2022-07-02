@@ -1,0 +1,12 @@
+pandoc: 2.17.1.1
+pkgdown: 2.0.5
+pkgdown_sha: ~
+articles:
+  cshlgsd2022: cshlgsd2022.html
+  large-scale-clustering: large-scale-clustering.html
+  resources: resources.html
+last_built: 2022-07-02T04:40Z
+urls:
+  reference: https://stephaniehicks.com/cshlgsd2022/reference
+  article: https://stephaniehicks.com/cshlgsd2022/articles
+
