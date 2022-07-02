@@ -1,0 +1,64 @@
+---
+title: "Get Started"
+description: >
+  Learn how to get started with the CSHL Genome Scale Data materials from Stephanie Hicks
+author: "Stephanie Hicks"
+output:
+  rmarkdown::html_document:
+   highlight: pygments
+   toc: true
+   toc_depth: 3
+   fig_width: 5
+vignette: >
+  %\VignetteIndexEntry{Large-scale clustering in Bioconductor}
+  %\VignetteEncoding[ut8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+# Create a copy of this repository
+
+You can create a new GitHub repository in your own GitHub account that is 
+a copy of this repository for yourself to edit/write code and notes. 
+Github calls this "creating a template repository." 
+This is different than a fork because there will be no link between the original and your repository.
+From there, you can clone the repository with the `git clone` command and run / edit the code in the repository.
+
+Creating a repository with the template can be done in the following way: 
+
+- Go to https://github.com/stephaniehicks/cshlgsd2022
+- Click on the "Use this template" button at the top of the GitHub template repository
+
+![](https://docs.github.com/assets/cb-36544/images/help/repository/use-this-template-button.png)
+
+From there, you can [follow these instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template). However do not optionally select "**Include all branches**" as you do not need this for your own projects.
+
+# Software
+
+I will make heavy use of R, so you should have R installed. You can obtain R from the [Comprehensive R Archive Network](https://cran.r-project.org). There are versions available for Mac, Windows, and Unix/Linux. This software is **required** for this course.	
+
+It is important that you have the latest version of R installed. I will be using **R version `r paste(version$major, version$minor, sep = ".")`**. You can determine what version of R you have by starting up R and typing into the console `R.version.string` and hitting the `return`/`enter` key. If you do not have the latest version of R installed, go to [CRAN](https://cran.r-project.org) and download and install the latest version.
+
+I will also make use of the RStudio interactive development environment (IDE). RStudio requires that R be installed, and so is an "add-on" to R. You can obtain the RStudio Desktop for free from the [RStudio web site](https://www.rstudio.com/). 
+
+## Install packages
+
+These materials use Bioconductor version 3.15.
+This is the current 'release' version of Bioconductor, which can be installed following [these instructions](https://bioconductor.org/install).
+
+For example, you can then install a subset of the packages necessary for these tutorials using the following:
+
+```
+library(BiocManager)
+install(c("SingleCellExperiment", "TENxPBMCData", "scater", "scran",
+  "scry", "mbkmeans"))
+```
+
+Please see the [`DESCRIPTION`](https://github.com/stephaniehicks/cshlgsd2022/blob/main/DESCRIPTION) for a full list of dependencies.
+
+
