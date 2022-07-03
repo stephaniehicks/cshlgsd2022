@@ -17,7 +17,10 @@ Imports:
   scran,
   scry,
   mbkmeans,
-  emojifont
+  emojifont, 
+  HCAData, 
+  hca, 
+  scRNAseq
 Suggests:
   pkgdown,
   TENxBrainData

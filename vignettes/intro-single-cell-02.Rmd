@@ -1,7 +1,7 @@
 ---
-title: "Best Practices for  Single-Cell Data Science"
+title: "Overview of single-cell analysis in R/Bioconductor"
 description: >
-  Best Practices for  Single-Cell Data Science
+  Overview of single-cell analysis in R/Bioconductor
 author: "Stephanie Hicks"
 output:
   rmarkdown::html_document:
@@ -10,7 +10,7 @@ output:
    toc_depth: 3
    fig_width: 5
 vignette: >
-  %\VignetteIndexEntry{Best practices in single-cell data science}
+  %\VignetteIndexEntry{Overview of single-cell analysis in R and Bioconductor}
   %\VignetteEncoding[ut8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -21,5 +21,46 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 
+# Overview
+
+## Key resources
+
+- Workshop material: [pkgdown website](https://stephaniehicks.com/cshlgsd2022)
+- Code: [GitHub](https://github.com/stephaniehicks/cshlgsd2022)
 
 
+# Part 1
+
+## Learning objectives 
+
+1. Understand how count matrices are created from single-cell experimental platforms and protocols
+2. Recognize which basic principles and concepts were transfered from bulk to single-cell data analyses
+3. Understand the key differences between bulk and single-cell data 
+4. Define what is a "Unique Molecular Identifier"
+5. Define multiplexing (and demultiplexing)
+
+## Materials 
+
+We will go through the introductory single-cell data science slides available here: 
+
+- https://docs.google.com/presentation/d/19tLNkFzNP2zkWGdMeaTAdE3quv78ukUeH_-v85g_pDI/edit?usp=sharing
+
+
+
+
+# Part 2
+
+## Learning objectives 
+
+1. Understand strategies to get access to existing single-cell data in R
+2. Know how to create a count matrix in R
+3. Recognize and define the `SingleCellExperiment` S4 class in R/Bioconductor to store single-cell data
+3. Be able to describe a standard workflow for analyzing single-cell data
+
+
+
+
+
+
+
+Work through this https://bioconductor.org/books/3.15/OSCA.intro/analysis-overview.html
