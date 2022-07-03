@@ -65,15 +65,23 @@ Please see the [`DESCRIPTION`](https://github.com/stephaniehicks/cshlgsd2022/blo
 # Schedule
 
 ::: l-body-outset
-| Day   | Time           | Topics                                       | Lab | 
-|--------- | ----------- | ----------------------------------------------- | --------------- |
+| Day   | Time           | Topics                                       | Labs | 
+|--------- | ----------- | ----------------------------------------------- | --------------------------------------|
 | **Module 1** |    | **Single-cell Data Science** | |
 | | | | |
-|   Jul 5    |  1-4pm | `r emojifont::emoji('wave')` Introduction to single-cell [[slides](https://docs.google.com/presentation/d/19tLNkFzNP2zkWGdMeaTAdE3quv78ukUeH_-v85g_pDI/edit?usp=sharing)] [[html](intro-single-cell-01.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
-| | | `r emojifont::emoji('woman_technologist')` Best practices for single-cell data science [[slides](https://docs.google.com/presentation/d/1v-QUVyBefRUlPo_xMwua3jAH_GCP7nAqPQ5wM2KuxVI/edit?usp=sharing)] [[html](intro-single-cell-02.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
-|   Jul 6    |  10:30am-12pm | `r emojifont::emoji('cool')` More single-cell data science [[slides]()] [[html](adv-single-cell-01.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
+|   Jul 5    |  1-4pm | `r emojifont::emoji('wave')` Introduction to single-cell [[slides](https://docs.google.com/presentation/d/19tLNkFzNP2zkWGdMeaTAdE3quv78ukUeH_-v85g_pDI/edit?usp=sharing)] [[html](intro-single-cell-01.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/intro-single-cell-01.Rmd)] |  `r emojifont::emoji('palm_tree')` Lab (Getting single-cell data) [[html](https://bioconductor.org/books/3.15/OSCA.intro/getting-scrna-seq-datasets.html)] |
+| |  | |  `r emojifont::emoji('palm_tree')` Lab (`SingleCellExperiment` class) [[html](https://bioconductor.org/books/3.15/OSCA.intro/the-singlecellexperiment-class.html)] |
+| |  | |  `r emojifont::emoji('palm_tree')` Lab (Analysis overview) [[html](https://bioconductor.org/books/3.15/OSCA.intro/analysis-overview.html)] |
+| | | `r emojifont::emoji('woman_technologist')` Best practices for single-cell data science [[slides](https://docs.google.com/presentation/d/1v-QUVyBefRUlPo_xMwua3jAH_GCP7nAqPQ5wM2KuxVI/edit?usp=sharing)] [[html](intro-single-cell-02.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/intro-single-cell-02.Rmd)] |  `r emojifont::emoji('palm_tree')` Lab (Quality control) [[html](http://bioconductor.org/books/3.15/OSCA.basic/quality-control.html)] |
+| |  | |  `r emojifont::emoji('palm_tree')` Lab (Normalization) [[html](https://bioconductor.org/books/3.15/OSCA.basic/normalization.html)] |
+| |  | |  `r emojifont::emoji('palm_tree')` Lab (Feature selection) [[html](https://bioconductor.org/books/3.15/OSCA.basic/feature-selection.html)] |
+|   Jul 6    |  10:30am-12pm | `r emojifont::emoji('black_circle')` More single-cell data science [[slides](https://docs.google.com/presentation/d/19EIrGrbZoQUyYQggy8Zxzo5RiwM7fEsiP3DSAsnCOgE/edit?usp=sharing)] [[html](adv-single-cell-01.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/adv-single-cell-01.Rmd)] |  `r emojifont::emoji('palm_tree')` Lab (Dim reduction) [[html](https://bioconductor.org/books/3.15/OSCA.basic/dimensionality-reduction.html)] |
+| | | |  `r emojifont::emoji('palm_tree')` Lab (Clustering) [[html](https://bioconductor.org/books/3.15/OSCA.basic/clustering.html)] |
+| | | |  `r emojifont::emoji('palm_tree')` Lab (Large-scale clustering) [[html](large-scale-clustering.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/large-scale-clustering.Rmd)]  |
+| | | |  `r emojifont::emoji('palm_tree')` Lab (Marker gene detection) [[html](https://bioconductor.org/books/3.15/OSCA.basic/marker-detection.html)] |
+| | | |  `r emojifont::emoji('palm_tree')` Lab (Cell type annotation) [[html](https://bioconductor.org/books/3.15/OSCA.basic/cell-type-annotation.html)] |
 | **Module 2** |    | **Spatial Transcriptomics Data Science** | |
 | | | | |
-|   Jul 6    |  1-2:30pm | `r emojifont::emoji('heart_eyes_cat')` Introduction to spatially-resolved transcriptomics [[slides]()] [[html](intro-spatial-01.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
-|   Jul 7    |  9-10:30am | `r emojifont::emoji('handshake')` More spatially-resolved transcriptomics [[slides]()] [[html](adv-spatial-01.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
+|   Jul 6    |  1-2:30pm | `r emojifont::emoji('heart_eyes_cat')` Introduction to spatially-resolved transcriptomics [[slides](https://docs.google.com/presentation/d/1UsbOP4pzw9K05QU_llAlIzy9sjZFoDVBlchOLk1QBEA/edit?usp=sharing)] [[html](intro-spatial-01.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/intro-spatial-01.Rmd)] |  `r emojifont::emoji('palm_tree')` Lab (TBA) [[html]()] [[Rmd]()] |
+|   Jul 7    |  9-10:30am | `r emojifont::emoji('cool')` More spatially-resolved transcriptomics [[slides](https://docs.google.com/presentation/d/1QZlDSuJxXfUaPrun7KkMwntTONTJguFdqsy7Dei5RL0/edit?usp=sharing)] [[html](adv-spatial-01.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/adv-spatial-01.Rmd)] |  `r emojifont::emoji('palm_tree')` Lab (TBA) [[html]()] [[Rmd]()] |
 :::
