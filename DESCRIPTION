@@ -16,7 +16,8 @@ Imports:
   scater,
   scran,
   scry,
-  mbkmeans
+  mbkmeans,
+  emojifont
 Suggests:
   pkgdown,
   TENxBrainData

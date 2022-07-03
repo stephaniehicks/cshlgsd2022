@@ -62,3 +62,18 @@ install(c("SingleCellExperiment", "TENxPBMCData", "scater", "scran",
 Please see the [`DESCRIPTION`](https://github.com/stephaniehicks/cshlgsd2022/blob/main/DESCRIPTION) for a full list of dependencies.
 
 
+# Schedule
+
+::: l-body-outset
+| Day   | Time           | Topics                                       | Lab | 
+|--------- | ----------- | ----------------------------------------------- | --------------- |
+| **Module 1** |    | **Single-cell Data Science** | |
+| | | | |
+|   Jul 5    |  1-4pm | `r emojifont::emoji('wave')` Introduction to single-cell [[slides](https://docs.google.com/presentation/d/19tLNkFzNP2zkWGdMeaTAdE3quv78ukUeH_-v85g_pDI/edit?usp=sharing)] [[html](intro-single-cell-01.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
+| | | `r emojifont::emoji('woman_technologist')` Best practices for single-cell data science [[slides](https://docs.google.com/presentation/d/1v-QUVyBefRUlPo_xMwua3jAH_GCP7nAqPQ5wM2KuxVI/edit?usp=sharing)] [[html](intro-single-cell-02.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
+|   Jul 6    |  10:30am-12pm | `r emojifont::emoji('cool')` More single-cell data science [[slides]()] [[html](adv-single-cell-01.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
+| **Module 2** |    | **Spatial Transcriptomics Data Science** | |
+| | | | |
+|   Jul 6    |  1-2:30pm | `r emojifont::emoji('heart_eyes_cat')` Introduction to spatially-resolved transcriptomics [[slides]()] [[html](intro-spatial-01.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
+|   Jul 7    |  9-10:30am | `r emojifont::emoji('handshake')` More spatially-resolved transcriptomics [[slides]()] [[html](adv-spatial-01.html)] [[Rmd]()] |  `r emojifont::emoji('palm_tree')` Lab [[html]()] |
+:::
