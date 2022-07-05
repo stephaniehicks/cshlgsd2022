@@ -21,4 +21,12 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-Testing
+
+
+
+# Session Info
+
+```{r}
+sessionInfo()
+```
+

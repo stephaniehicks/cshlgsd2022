@@ -207,4 +207,9 @@ sce <- ZeiselBrainData(ensembl=TRUE, location=TRUE)
 head(rowRanges(sce))
 ```
 
+# Session Info
+
+```{r}
+sessionInfo()
+```
 
