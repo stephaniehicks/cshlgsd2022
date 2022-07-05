@@ -33,11 +33,11 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 ## Learning objectives 
 
-1. Add here
-2. Add here
-3. Add here
-4. Add here
-5. Add here
+1. Be able to list at least three quality control (QC) metrics for scRNA-seq data
+2. Know the difference between fixed and adaptive thresholds for QC metrics
+3. Be able to define a "library size" in terms of normalization
+4. Describe some common probability distributions used to model scRNA-seq data
+5. Describe imputation and what it does to scRNA-seq data
 
 
 ## Materials 
@@ -54,6 +54,7 @@ We will go through the best practices single-cell data science slides available 
 ## Learning objectives 
 
 1. Be able to describe a standard workflow for analyzing single-cell data
+2. Be able to run code for a standard workflow starting from loading a `SingleCellExperiment` in R and identifying clusters.
 
 
 ## Overview 
@@ -73,13 +74,15 @@ In the simplest case, the workflow has the following form:
 4. We apply dimensionality reduction to compact the data and further reduce noise. Principal components analysis is typically used to obtain an initial low-rank representation for more computational work, followed by more aggressive methods like $t$-stochastic neighbor embedding for visualization purposes.
 5. We cluster cells into groups according to similarities in their (normalized) expression profiles. This aims to obtain groupings that serve as empirical proxies for distinct biological states. We typically interpret these groupings by identifying differentially expressed marker genes between clusters.
 
-Today and tomnorrow, we will describe each analysis step in more detail.
+
+
+Today and tomorrow, we will describe each analysis step in more detail.
 
 ## Quick start (simple)
 
-Here, we use the a droplet-based retina dataset from Macosko et al. (2015), provided in the scRNAseq package. 
-This starts from a count matrix and finishes with clusters (Figure above) in preparation for biological interpretation. 
-Similar workflows are available in abbreviated form in later parts OSCA.
+Here, we use the a droplet-based retina dataset from Macosko et al. (2015), provided in the `scRNAseq` package. 
+This starts from a count matrix and finishes with clusters in preparation for biological interpretation. 
+We also demonstrate how to identify differentially expressed genes between the clusters. 
 
 ```{r}
 library(scRNAseq)

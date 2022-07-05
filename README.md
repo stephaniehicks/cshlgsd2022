@@ -33,5 +33,7 @@ This course website was developed and is maintained by Stephanie C. Hicks.
 The following individuals have contributed to improving the course or materials have been adapted from their courses: 
 
 - [Keegan Korthauer](https://kkorthauer.org)
+- [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA) (OSCA) contributors (cite: [Amezquita et al. 2019](https://doi.org/10.1038/s41592-019-0654-x))
+- [Orchestrating Spatially-Resolved Transcriptomics Analysis with Bioconductor](https://lmweber.org/OSTA-book) (OSTA) contributors (work in progress)
 
 The course materials are licensed under the Creative Commons Attribution 4.0 International License. Linked and embedded materials are governed by their own licenses. I assume that all external materials used or embedded here are covered under the educational fair use policy. If this is not the case and any material displayed here violates copyright, please let me know and I will remove it.

@@ -133,11 +133,14 @@ Hicks</h4>
 <h3 id="learning-objectives">Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"></a>
 </h3>
 <ol style="list-style-type: decimal">
-<li>Add here</li>
-<li>Add here</li>
-<li>Add here</li>
-<li>Add here</li>
-<li>Add here</li>
+<li>Be able to list at least three quality control (QC) metrics for
+scRNA-seq data</li>
+<li>Know the difference between fixed and adaptive thresholds for QC
+metrics</li>
+<li>Be able to define a “library size” in terms of normalization</li>
+<li>Describe some common probability distributions used to model
+scRNA-seq data</li>
+<li>Describe imputation and what it does to scRNA-seq data</li>
 </ol>
 </div>
 <div class="section level3">
@@ -159,6 +162,8 @@ available here:</p>
 <ol style="list-style-type: decimal">
 <li>Be able to describe a standard workflow for analyzing single-cell
 data</li>
+<li>Be able to run code for a standard workflow starting from loading a
+<code>SingleCellExperiment</code> in R and identifying clusters.</li>
 </ol>
 </div>
 <div class="section level3">
@@ -196,17 +201,17 @@ serve as empirical proxies for distinct biological states. We typically
 interpret these groupings by identifying differentially expressed marker
 genes between clusters.</li>
 </ol>
-<p>Today and tomnorrow, we will describe each analysis step in more
+<p>Today and tomorrow, we will describe each analysis step in more
 detail.</p>
 </div>
 <div class="section level3">
 <h3 id="quick-start-simple">Quick start (simple)<a class="anchor" aria-label="anchor" href="#quick-start-simple"></a>
 </h3>
 <p>Here, we use the a droplet-based retina dataset from Macosko et
-al. (2015), provided in the scRNAseq package. This starts from a count
-matrix and finishes with clusters (Figure above) in preparation for
-biological interpretation. Similar workflows are available in
-abbreviated form in later parts OSCA.</p>
+al. (2015), provided in the <code>scRNAseq</code> package. This starts
+from a count matrix and finishes with clusters in preparation for
+biological interpretation. We also demonstrate how to identify
+differentially expressed genes between the clusters.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scRNAseq</span><span class="op">)</span></span>
 <span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scRNAseq/man/MacoskoRetinaData.html" class="external-link">MacoskoRetinaData</a></span><span class="op">(</span><span class="op">)</span></span>
