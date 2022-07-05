@@ -20,7 +20,46 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-## Introduction
+
+# Overview
+
+## Key resources
+
+- Workshop material: [pkgdown website](https://stephaniehicks.com/cshlgsd2022)
+- Code: [GitHub](https://github.com/stephaniehicks/cshlgsd2022)
+
+
+# Part 1
+
+## Learning objectives 
+
+1. Add here.
+2. Add here.
+3. Add here.
+4. Add here.
+5. Add here.
+
+
+## Materials 
+
+We will go through these slides on "More Single-Cell Data Science": 
+
+- https://docs.google.com/presentation/d/19EIrGrbZoQUyYQggy8Zxzo5RiwM7fEsiP3DSAsnCOgE/edit?usp=sharing
+
+
+
+
+
+
+# Part 2
+
+## Learning objectives 
+
+1. Be able to load a `SingleCellExperiment` object in a `.HDF5` file format for large-scale single-cell data. 
+2. Be able to apply standard scRNA-seq workflow, but to a large dataset. 
+
+
+## Overview 
 
 This tutorial gives a demo of large-scale clustering in the Bioconductor using the *DelayedArray* framework. 
 *DelayedArray* is like an ordinary array in R, but allows for the data to be in-memory, on-disk in a file, or even hosted on a remote server. 
