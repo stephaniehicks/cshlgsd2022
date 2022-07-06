@@ -20,7 +20,9 @@ Imports:
   emojifont, 
   HCAData, 
   hca, 
-  scRNAseq
+  scRNAseq,
+  SpatialExperiment,
+  STexampleData
 Suggests:
   pkgdown,
   TENxBrainData

@@ -65,11 +65,6 @@
     <li>
       <a href="../articles/adv-spatial-01.html">Advanced Spatial Transcriptomics Data Science</a>
     </li>
-    <li class="divider">
-    </li>
-<li>
-      <a href="../articles/index.html">More articles...</a>
-    </li>
   </ul>
 </li>
       </ul>
@@ -113,9 +108,189 @@ Hicks</h4>
     
     
 <div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<div class="section level3">
+<h3 id="key-resources">Key resources<a class="anchor" aria-label="anchor" href="#key-resources"></a>
+</h3>
+<ul>
+<li>Workshop material: <a href="https://stephaniehicks.com/cshlgsd2022">pkgdown website</a>
+</li>
+<li>Code: <a href="https://github.com/stephaniehicks/cshlgsd2022" class="external-link">GitHub</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="part-1">Part 1<a class="anchor" aria-label="anchor" href="#part-1"></a>
+</h2>
+<div class="section level3">
+<h3 id="learning-objectives">Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>Describe what is spatially-resolved transcriptomics and how it’s
+different from single-cell / single nucleus RNA-seq.</li>
+<li>Describe at least 5 open challenges / questions that one can ask
+with SRT data.</li>
+<li>Understand some examples of preprocessing steps that need to be
+performed (different from single-cell).</li>
+<li>Recognize tools to perform quantification of spatial transcriptomics
+data from 10x Genomics Visium.</li>
+<li>Recognize what is a <code>SpatialExperiment</code> object and how
+it’s different from a <code>SingleCellExperiment</code> object.</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="materials">Materials<a class="anchor" aria-label="anchor" href="#materials"></a>
+</h3>
+<p>We will go through these slides on “Introduction to
+Spatially-Resolved Transcriptomics Data Science”:</p>
+<ul>
+<li><a href="https://docs.google.com/presentation/d/1UsbOP4pzw9K05QU_llAlIzy9sjZFoDVBlchOLk1QBEA/edit?usp=sharing" class="external-link uri">https://docs.google.com/presentation/d/1UsbOP4pzw9K05QU_llAlIzy9sjZFoDVBlchOLk1QBEA/edit?usp=sharing</a></li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="part-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2"></a>
+</h2>
+<div class="section level3">
+<h3 id="learning-objectives-1">Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives-1"></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>Be able to load a <code>SpatialExperiment</code> object into
+R/Bioconductor.</li>
+<li>Be able to extract the counts matrix and image(s) from a
+<code>SpatialExperiment</code> object</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="overview-1">Overview<a class="anchor" aria-label="anchor" href="#overview-1"></a>
+</h3>
+<p>In the following analysis sections, we use a pre-prepared dataset
+(preprocessing steps described <a href="https://lmweber.org/OSTA-book/preprocessing-steps.html#preprocessing-steps" class="external-link">here</a>),
+and saved the object in the <code>SpatialExperiment</code> format. This
+is available from the <a href="https://bioconductor.org/packages/release/data/experiment/html/STexampleData.html" class="external-link"><code>STexampleData</code>
+R/Bioconductor package</a>.</p>
+<p>The dataset consists of a single sample of human brain from the
+dorsolateral prefrontal cortex (DLPFC) region, measured using the 10x
+Genomics Visium platform, sourced from Kristen R. Maynard et al. (2021).
+The dataset is also described in more detail in [Visium human DLPFC
+workflow].</p>
+<p>Here, we show how to load the data from the
+<code>STexampleData</code> package.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/drighelli/SpatialExperiment" class="external-link">SpatialExperiment</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lmweber/STexampleData" class="external-link">STexampleData</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="load-data">Load data<a class="anchor" aria-label="anchor" href="#load-data"></a>
+</h4>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># load object</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/STexampleData/man/STexampleData.html" class="external-link">Visium_humanDLPFC</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>We can look at the <code>SpatialExperiment</code> object by printing
+it to the screen</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># inspect object</span></span>
+<span><span class="va">spe</span></span></code></pre></div>
+<pre><code><span><span class="co">## class: SpatialExperiment </span></span>
+<span><span class="co">## dim: 33538 4992 </span></span>
+<span><span class="co">## metadata(0):</span></span>
+<span><span class="co">## assays(1): counts</span></span>
+<span><span class="co">## rownames(33538): ENSG00000243485 ENSG00000237613 ... ENSG00000277475</span></span>
+<span><span class="co">##   ENSG00000268674</span></span>
+<span><span class="co">## rowData names(3): gene_id gene_name feature_type</span></span>
+<span><span class="co">## colnames(4992): AAACAACGAATAGTTC-1 AAACAAGTATCTCCCA-1 ...</span></span>
+<span><span class="co">##   TTGTTTGTATTACACG-1 TTGTTTGTGTAAATTC-1</span></span>
+<span><span class="co">## colData names(7): barcode_id sample_id ... ground_truth cell_count</span></span>
+<span><span class="co">## reducedDimNames(0):</span></span>
+<span><span class="co">## mainExpName: NULL</span></span>
+<span><span class="co">## altExpNames(0):</span></span>
+<span><span class="co">## spatialCoords names(2) : pxl_col_in_fullres pxl_row_in_fullres</span></span>
+<span><span class="co">## imgData names(4): sample_id image_id data scaleFactor</span></span></code></pre>
+</div>
+<div class="section level4">
+<h4 id="explore-the-components-of-the-object">Explore the components of the object<a class="anchor" aria-label="anchor" href="#explore-the-components-of-the-object"></a>
+</h4>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># number of features (rows) and spots (columns)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 33538  4992</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># names of 'assay' tables</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assayNames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "counts"</span></span></code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># features metadata</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## DataFrame with 6 rows and 3 columns</span></span>
+<span><span class="co">##                         gene_id   gene_name    feature_type</span></span>
+<span><span class="co">##                     &lt;character&gt; &lt;character&gt;     &lt;character&gt;</span></span>
+<span><span class="co">## ENSG00000243485 ENSG00000243485 MIR1302-2HG Gene Expression</span></span>
+<span><span class="co">## ENSG00000237613 ENSG00000237613     FAM138A Gene Expression</span></span>
+<span><span class="co">## ENSG00000186092 ENSG00000186092       OR4F5 Gene Expression</span></span>
+<span><span class="co">## ENSG00000238009 ENSG00000238009  AL627309.1 Gene Expression</span></span>
+<span><span class="co">## ENSG00000239945 ENSG00000239945  AL627309.3 Gene Expression</span></span>
+<span><span class="co">## ENSG00000239906 ENSG00000239906  AL627309.2 Gene Expression</span></span></code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># spot-level metadata</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## DataFrame with 6 rows and 7 columns</span></span>
+<span><span class="co">##                            barcode_id     sample_id in_tissue array_row</span></span>
+<span><span class="co">##                           &lt;character&gt;   &lt;character&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
+<span><span class="co">## AAACAACGAATAGTTC-1 AAACAACGAATAGTTC-1 sample_151673         0         0</span></span>
+<span><span class="co">## AAACAAGTATCTCCCA-1 AAACAAGTATCTCCCA-1 sample_151673         1        50</span></span>
+<span><span class="co">## AAACAATCTACTAGCA-1 AAACAATCTACTAGCA-1 sample_151673         1         3</span></span>
+<span><span class="co">## AAACACCAATAACTGC-1 AAACACCAATAACTGC-1 sample_151673         1        59</span></span>
+<span><span class="co">## AAACAGAGCGACTCCT-1 AAACAGAGCGACTCCT-1 sample_151673         1        14</span></span>
+<span><span class="co">## AAACAGCTTTCAGAAG-1 AAACAGCTTTCAGAAG-1 sample_151673         1        43</span></span>
+<span><span class="co">##                    array_col ground_truth cell_count</span></span>
+<span><span class="co">##                    &lt;integer&gt;  &lt;character&gt;  &lt;integer&gt;</span></span>
+<span><span class="co">## AAACAACGAATAGTTC-1        16           NA         NA</span></span>
+<span><span class="co">## AAACAAGTATCTCCCA-1       102       Layer3          6</span></span>
+<span><span class="co">## AAACAATCTACTAGCA-1        43       Layer1         16</span></span>
+<span><span class="co">## AAACACCAATAACTGC-1        19           WM          5</span></span>
+<span><span class="co">## AAACAGAGCGACTCCT-1        94       Layer3          2</span></span>
+<span><span class="co">## AAACAGCTTTCAGAAG-1         9       Layer5          4</span></span></code></pre>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># spatial coordinates</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html" class="external-link">spatialCoords</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                    pxl_col_in_fullres pxl_row_in_fullres</span></span>
+<span><span class="co">## AAACAACGAATAGTTC-1               3913               2435</span></span>
+<span><span class="co">## AAACAAGTATCTCCCA-1               9791               8468</span></span>
+<span><span class="co">## AAACAATCTACTAGCA-1               5769               2807</span></span>
+<span><span class="co">## AAACACCAATAACTGC-1               4068               9505</span></span>
+<span><span class="co">## AAACAGAGCGACTCCT-1               9271               4151</span></span>
+<span><span class="co">## AAACAGCTTTCAGAAG-1               3393               7583</span></span></code></pre>
+</div>
+<div class="section level4">
+<h4 id="exploring-the-image">Exploring the image<a class="anchor" aria-label="anchor" href="#exploring-the-image"></a>
+</h4>
+<p>The image itself can be accessed using <code><a href="https://rdrr.io/pkg/SpatialExperiment/man/imgData-methods.html" class="external-link">getImg()</a></code>, or
+retrieved directly from the <code><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html" class="external-link">imgData()</a></code> functions:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># image metadata</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-methods.html" class="external-link">imgData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## DataFrame with 2 rows and 4 columns</span></span>
+<span><span class="co">##       sample_id    image_id   data scaleFactor</span></span>
+<span><span class="co">##     &lt;character&gt; &lt;character&gt; &lt;list&gt;   &lt;numeric&gt;</span></span>
+<span><span class="co">## 1 sample_151673      lowres   ####   0.0450045</span></span>
+<span><span class="co">## 2 sample_151673       hires   ####   0.1500150</span></span></code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/imgData-methods.html" class="external-link">getImg</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
+<span><span class="va">spi</span></span></code></pre></div>
+<pre><code><span><span class="co">## 600 x 600 (width x height) LoadedSpatialImage</span></span></code></pre>
+<p>Data available in an object of class SpatialImage may be accessed via
+the <code><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html" class="external-link">imgRaster()</a></code> and <code><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html" class="external-link">imgSource()</a></code> accessors:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialImage-class.html" class="external-link">imgRaster</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="intro-spatial-01_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+</div>
+</div>
+</div>
+<div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.2.1 (2022-06-23)</span></span>
 <span><span class="co">## Platform: aarch64-apple-darwin21.5.0 (64-bit)</span></span>
@@ -129,17 +304,70 @@ Hicks</h4>
 <span><span class="co">## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
-<span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">## [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">## [8] base     </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## other attached packages:</span></span>
+<span><span class="co">##  [1] STexampleData_1.4.5         ExperimentHub_2.4.0        </span></span>
+<span><span class="co">##  [3] AnnotationHub_3.4.0         BiocFileCache_2.4.0        </span></span>
+<span><span class="co">##  [5] dbplyr_2.2.1                SpatialExperiment_1.6.0    </span></span>
+<span><span class="co">##  [7] SingleCellExperiment_1.18.0 SummarizedExperiment_1.26.1</span></span>
+<span><span class="co">##  [9] Biobase_2.56.0              GenomicRanges_1.48.0       </span></span>
+<span><span class="co">## [11] GenomeInfoDb_1.32.2         IRanges_2.30.0             </span></span>
+<span><span class="co">## [13] S4Vectors_0.34.0            BiocGenerics_0.42.0        </span></span>
+<span><span class="co">## [15] MatrixGenerics_1.8.1        matrixStats_0.62.0         </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] rprojroot_2.0.3   digest_0.6.29     R6_2.5.1          jsonlite_1.8.0   </span></span>
-<span><span class="co">##  [5] magrittr_2.0.3    evaluate_0.15     stringi_1.7.6     rlang_1.0.3      </span></span>
-<span><span class="co">##  [9] cachem_1.0.6      cli_3.3.0         rstudioapi_0.13   fs_1.5.2         </span></span>
-<span><span class="co">## [13] jquerylib_0.1.4   bslib_0.3.1       ragg_1.2.2        rmarkdown_2.14   </span></span>
-<span><span class="co">## [17] pkgdown_2.0.5     textshaping_0.3.6 desc_1.4.1        tools_4.2.1      </span></span>
-<span><span class="co">## [21] stringr_1.4.0     purrr_0.3.4       yaml_2.3.5        xfun_0.31        </span></span>
-<span><span class="co">## [25] fastmap_1.1.0     compiler_4.2.1    systemfonts_1.0.4 memoise_2.0.1    </span></span>
-<span><span class="co">## [29] htmltools_0.5.2   knitr_1.39        sass_0.4.1</span></span></code></pre>
+<span><span class="co">##  [1] bitops_1.0-7                  fs_1.5.2                     </span></span>
+<span><span class="co">##  [3] bit64_4.0.5                   filelock_1.0.2               </span></span>
+<span><span class="co">##  [5] httr_1.4.3                    rprojroot_2.0.3              </span></span>
+<span><span class="co">##  [7] tools_4.2.1                   bslib_0.3.1                  </span></span>
+<span><span class="co">##  [9] utf8_1.2.2                    R6_2.5.1                     </span></span>
+<span><span class="co">## [11] HDF5Array_1.24.1              DBI_1.1.3                    </span></span>
+<span><span class="co">## [13] rhdf5filters_1.8.0            tidyselect_1.1.2             </span></span>
+<span><span class="co">## [15] curl_4.3.2                    bit_4.0.4                    </span></span>
+<span><span class="co">## [17] compiler_4.2.1                textshaping_0.3.6            </span></span>
+<span><span class="co">## [19] cli_3.3.0                     desc_1.4.1                   </span></span>
+<span><span class="co">## [21] DelayedArray_0.22.0           sass_0.4.1                   </span></span>
+<span><span class="co">## [23] rappdirs_0.3.3                pkgdown_2.0.5                </span></span>
+<span><span class="co">## [25] systemfonts_1.0.4             stringr_1.4.0                </span></span>
+<span><span class="co">## [27] digest_0.6.29                 rmarkdown_2.14               </span></span>
+<span><span class="co">## [29] R.utils_2.12.0                XVector_0.36.0               </span></span>
+<span><span class="co">## [31] pkgconfig_2.0.3               htmltools_0.5.2              </span></span>
+<span><span class="co">## [33] sparseMatrixStats_1.8.0       highr_0.9                    </span></span>
+<span><span class="co">## [35] fastmap_1.1.0                 limma_3.52.2                 </span></span>
+<span><span class="co">## [37] rlang_1.0.3                   rstudioapi_0.13              </span></span>
+<span><span class="co">## [39] RSQLite_2.2.14                shiny_1.7.1                  </span></span>
+<span><span class="co">## [41] DelayedMatrixStats_1.18.0     jquerylib_0.1.4              </span></span>
+<span><span class="co">## [43] generics_0.1.3                jsonlite_1.8.0               </span></span>
+<span><span class="co">## [45] BiocParallel_1.30.3           dplyr_1.0.9                  </span></span>
+<span><span class="co">## [47] R.oo_1.25.0                   RCurl_1.98-1.7               </span></span>
+<span><span class="co">## [49] magrittr_2.0.3                GenomeInfoDbData_1.2.8       </span></span>
+<span><span class="co">## [51] scuttle_1.6.2                 Matrix_1.4-1                 </span></span>
+<span><span class="co">## [53] Rcpp_1.0.8.3                  Rhdf5lib_1.18.2              </span></span>
+<span><span class="co">## [55] fansi_1.0.3                   lifecycle_1.0.1              </span></span>
+<span><span class="co">## [57] R.methodsS3_1.8.2             stringi_1.7.6                </span></span>
+<span><span class="co">## [59] yaml_2.3.5                    edgeR_3.38.1                 </span></span>
+<span><span class="co">## [61] zlibbioc_1.42.0               rhdf5_2.40.0                 </span></span>
+<span><span class="co">## [63] grid_4.2.1                    blob_1.2.3                   </span></span>
+<span><span class="co">## [65] promises_1.2.0.1              parallel_4.2.1               </span></span>
+<span><span class="co">## [67] dqrng_0.3.0                   crayon_1.5.1                 </span></span>
+<span><span class="co">## [69] lattice_0.20-45               Biostrings_2.64.0            </span></span>
+<span><span class="co">## [71] beachmat_2.12.0               KEGGREST_1.36.2              </span></span>
+<span><span class="co">## [73] locfit_1.5-9.5                magick_2.7.3                 </span></span>
+<span><span class="co">## [75] knitr_1.39                    pillar_1.7.0                 </span></span>
+<span><span class="co">## [77] rjson_0.2.21                  codetools_0.2-18             </span></span>
+<span><span class="co">## [79] BiocVersion_3.15.2            glue_1.6.2                   </span></span>
+<span><span class="co">## [81] evaluate_0.15                 BiocManager_1.30.18          </span></span>
+<span><span class="co">## [83] png_0.1-7                     httpuv_1.6.5                 </span></span>
+<span><span class="co">## [85] vctrs_0.4.1                   purrr_0.3.4                  </span></span>
+<span><span class="co">## [87] assertthat_0.2.1              cachem_1.0.6                 </span></span>
+<span><span class="co">## [89] xfun_0.31                     mime_0.12                    </span></span>
+<span><span class="co">## [91] DropletUtils_1.16.0           xtable_1.8-4                 </span></span>
+<span><span class="co">## [93] later_1.3.0                   ragg_1.2.2                   </span></span>
+<span><span class="co">## [95] tibble_3.1.7                  AnnotationDbi_1.58.0         </span></span>
+<span><span class="co">## [97] memoise_2.0.1                 interactiveDisplayBase_1.34.0</span></span>
+<span><span class="co">## [99] ellipsis_0.3.2</span></span></code></pre>
 </div>
   </div>
 

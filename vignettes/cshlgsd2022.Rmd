@@ -97,8 +97,8 @@ Please see the [`DESCRIPTION`](https://github.com/stephaniehicks/cshlgsd2022/blo
 | **Module 2** |    | **Spatial Transcriptomics Data Science** |
 | | | |
 |   Jul 6 (1-2:30pm)   | 1-1:25pm  | `r emojifont::emoji('woman_technologist')` Introduction to spatially-resolved transcriptomics (SRT) [[slides](https://docs.google.com/presentation/d/1UsbOP4pzw9K05QU_llAlIzy9sjZFoDVBlchOLk1QBEA/edit?usp=sharing)] |
-| | 1:25-1:30pm | **5min break; prepare for working in R/RStudio** | 
-| |  1:30-2pm | `r emojifont::emoji('woman_technologist')` `SpatialExperiment` class and spatially variable genes [[html](intro-spatial-01.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/intro-spatial-01.Rmd)]
+| | 1:25-1:30pm | **5min break** | 
+| |  1:30-2pm | `r emojifont::emoji('woman_technologist')` `SpatialExperiment` class and spatially variable genes [[slides](https://docs.google.com/presentation/d/1UsbOP4pzw9K05QU_llAlIzy9sjZFoDVBlchOLk1QBEA/edit?usp=sharing)] [[html](intro-spatial-01.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/intro-spatial-01.Rmd)]
 | | 2-2:05pm | **5min break; pick 1 of labs below to read through until 2:25pm** | 
 | |  |  `r emojifont::emoji('palm_tree')` Lab (Human DLPFC workflow) [[html](https://lmweber.org/OSTA-book/human-dlpfc-workflow.html)] |
 | |  |  `r emojifont::emoji('palm_tree')` Lab (Mouse coronal workflow) [[html](https://lmweber.org/OSTA-book/mouse-coronal-workflow.html)] |

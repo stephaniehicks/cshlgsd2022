@@ -20,6 +20,123 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
+# Overview
+
+## Key resources
+
+- Workshop material: [pkgdown website](https://stephaniehicks.com/cshlgsd2022)
+- Code: [GitHub](https://github.com/stephaniehicks/cshlgsd2022)
+
+
+# Part 1
+
+## Learning objectives 
+
+1. Describe what is spatially-resolved transcriptomics and how it's different from single-cell / single nucleus RNA-seq. 
+2. Describe at least 5 open challenges / questions that one can ask with SRT data.
+3. Understand some examples of preprocessing steps that need to be performed (different from single-cell).
+4. Recognize tools to perform quantification of spatial transcriptomics data from 10x Genomics Visium.
+5. Recognize what is a `SpatialExperiment` object and how it's different from a `SingleCellExperiment` object.
+
+
+## Materials 
+
+We will go through these slides on "Introduction to Spatially-Resolved Transcriptomics Data Science": 
+
+- https://docs.google.com/presentation/d/1UsbOP4pzw9K05QU_llAlIzy9sjZFoDVBlchOLk1QBEA/edit?usp=sharing
+
+
+# Part 2
+
+## Learning objectives 
+
+1. Be able to load a `SpatialExperiment` object into R/Bioconductor.
+2. Be able to extract the counts matrix and image(s) from a `SpatialExperiment` object
+
+
+## Overview 
+
+In the following analysis sections, we use a pre-prepared dataset (preprocessing steps described [here](https://lmweber.org/OSTA-book/preprocessing-steps.html#preprocessing-steps)), and saved the object in the `SpatialExperiment` format. This is available from the [`STexampleData` R/Bioconductor package](https://bioconductor.org/packages/release/data/experiment/html/STexampleData.html).
+
+The dataset consists of a single sample of human brain from the dorsolateral prefrontal cortex (DLPFC) region, measured using the 10x Genomics Visium platform, sourced from Kristen R. Maynard et al. (2021). The dataset is also described in more detail in [Visium human DLPFC workflow].
+
+Here, we show how to load the data from the `STexampleData` package.
+
+
+```{r}
+library(SpatialExperiment)
+library(STexampleData)
+```
+
+### Load data
+
+```{r}
+# load object
+spe <- Visium_humanDLPFC()
+```
+
+We can look at the `SpatialExperiment` object by printing it to the screen
+
+```{r}
+# inspect object
+spe
+```
+
+### Explore the components of the object
+
+```{r}
+# number of features (rows) and spots (columns)
+dim(spe)
+```
+
+```{r}
+# names of 'assay' tables
+assayNames(spe)
+```
+
+```{r}
+# features metadata
+head(rowData(spe))
+```
+
+```{r}
+# spot-level metadata
+head(colData(spe))
+```
+
+
+
+```{r}
+# spatial coordinates
+head(spatialCoords(spe))
+```
+
+
+
+### Exploring the image
+
+The image itself can be accessed using `getImg()`, or retrieved directly from the `imgData()` functions:
+
+
+
+```{r}
+# image metadata
+imgData(spe)
+```
+
+
+```{r}
+spi <- getImg(spe)
+spi
+```
+
+Data available in an object of class SpatialImage may be accessed via the `imgRaster()` and `imgSource()` accessors:
+
+```{r}
+plot(imgRaster(spe))
+```
+
+
 
 # Session Info
 

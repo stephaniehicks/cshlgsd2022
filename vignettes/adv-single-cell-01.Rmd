@@ -33,11 +33,11 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 
 ## Learning objectives 
 
-1. Add here.
-2. Add here.
-3. Add here.
-4. Add here.
-5. Add here.
+1. Understand why feature selection is important 
+2. Recognize basic strategies for identifying highly variable genes.
+3. Be able to describe what is dimensionality reduction and name at least three types of methods.
+4. Be able to describe what does clustering give us and name at least three types of approaches to clustering. 
+5. Be able to explain why the question "What are the 'true' number of clusters?" is not a great question and be able to reframe the question to e.g. "how well do the clusters approximate the cell types or states of interest?"
 
 
 ## Materials 
@@ -47,16 +47,12 @@ We will go through these slides on "More Single-Cell Data Science":
 - https://docs.google.com/presentation/d/19EIrGrbZoQUyYQggy8Zxzo5RiwM7fEsiP3DSAsnCOgE/edit?usp=sharing
 
 
-
-
-
-
 # Part 2
 
 ## Learning objectives 
 
 1. Be able to load a `SingleCellExperiment` object in a `.HDF5` file format for large-scale single-cell data. 
-2. Be able to apply standard scRNA-seq workflow, but to a large dataset. 
+2. Be able to apply standard scRNA-seq workflow, but to a "large" dataset. 
 
 
 ## Overview 
