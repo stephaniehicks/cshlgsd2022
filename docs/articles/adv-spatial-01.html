@@ -108,9 +108,452 @@ Hicks</h4>
     
     
 <div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>As the number of computational and statistical methods for the
+analysis single-cell and spatial transcriptomics continue to increase,
+you will find that they will be implemented in many languages. Often
+Python is the language of choice. Python is incredibly powerful and I
+increasingly interact with it on very frequent basis these days. To be
+able to leverage the single-cell and spatial software tools implemented
+in Python, today I am giving an overview of using Python from the
+perspective of an R user.</p>
+<p>Happy coding!</p>
+<div class="section level3">
+<h3 id="key-resources">Key resources<a class="anchor" aria-label="anchor" href="#key-resources"></a>
+</h3>
+<ul>
+<li>Workshop material: <a href="https://stephaniehicks.com/cshlgsd2022">pkgdown website</a>
+</li>
+<li>Code: <a href="https://github.com/stephaniehicks/cshlgsd2022" class="external-link">GitHub</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="python-for-r-users">Python for R Users<a class="anchor" aria-label="anchor" href="#python-for-r-users"></a>
+</h2>
+<div class="section level3">
+<h3 id="read-ahead">Read ahead<a class="anchor" aria-label="anchor" href="#read-ahead"></a>
+</h3>
+<p><strong>Before the tutorial, you can prepare by reading the following
+materials:</strong></p>
+<ol style="list-style-type: decimal">
+<li><a href="https://rstudio.github.io/reticulate" class="external-link uri">https://rstudio.github.io/reticulate</a></li>
+<li><a href="https://py-pkgs.org/02-setup" class="external-link uri">https://py-pkgs.org/02-setup</a></li>
+<li><a href="https://docs.python.org/3/tutorial" class="external-link">The Python
+Tutorial</a></li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h3>
+<p>Material for this lecture was borrowed and adopted from</p>
+<ul>
+<li><a href="https://rstudio.github.io/reticulate" class="external-link uri">https://rstudio.github.io/reticulate</a></li>
+<li><a href="https://github.com/bcaffo/ds4ph-bme/blob/master/python.md" class="external-link uri">https://github.com/bcaffo/ds4ph-bme/blob/master/python.md</a></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="learning-objectives">Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>Install python on your local machine</li>
+<li>Learn about the <code>reticulate</code> package to work
+interoperability between Python and R</li>
+<li>Be able to translate between R and Python objects</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="overview-1">Overview<a class="anchor" aria-label="anchor" href="#overview-1"></a>
+</h3>
+<p>For this lesson, we will be using the <a href="https://rstudio.github.io/reticulate" class="external-link"><code>reticulate</code> R
+package</a>, which provides a set of tools for interoperability between
+Python and R. The package includes facilities for:</p>
+<ul>
+<li><p>Calling Python from R in a variety of ways including R Markdown,
+sourcing Python scripts, importing Python modules, and using Python
+interactively within an R session.</p></li>
+<li><p>Translation between R and Python objects (for example, between R
+and Pandas data frames, or between R matrices and NumPy
+arrays).</p></li>
+</ul>
+<div class="figure" style="text-align: center">
+<img src="https://rstudio.github.io/reticulate/images/reticulated_python.png" alt="reticulate R package logo" width="60%"><p class="caption">
+reticulate R package logo
+</p>
+</div>
+<p>[<strong>Source</strong>: <a href="https://rstudio.github.io/reticulate/index.html" class="external-link">Rstudio</a>]</p>
+</div>
+<div class="section level3">
+<h3 id="install-python">Install python<a class="anchor" aria-label="anchor" href="#install-python"></a>
+</h3>
+<p><strong>Installing python</strong>: If you would like recommendations
+on installing python, I like this resource: <a href="https://py-pkgs.org/02-setup#installing-python" class="external-link uri">https://py-pkgs.org/02-setup#installing-python</a> or using
+conda environments with mini-forge!</p>
+<p><strong>What’s happening under the hood?</strong>:
+<code>reticulate</code> embeds a Python session within your R session,
+enabling seamless, high-performance interoperability.</p>
+<p>If you are an R developer that uses Python for some of your work or a
+member of data science team that uses both languages,
+<code>reticulate</code> can make your life better!</p>
+</div>
+<div class="section level3">
+<h3 id="install-reticulate">Install <code>reticulate</code><a class="anchor" aria-label="anchor" href="#install-reticulate"></a>
+</h3>
+<p>Let’s try it out. Before we get started, you will need to install the
+packages, if not already:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">install.package</span><span class="op">(</span><span class="st">"reticulate"</span><span class="op">)</span></span></code></pre></div>
+<p>We will also load the <code>here</code> and <code>tidyverse</code>
+packages for our lesson:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="python-path">python path<a class="anchor" aria-label="anchor" href="#python-path"></a>
+</h3>
+<p>If python is not installed on your computer, you can use the
+<code><a href="https://rstudio.github.io/reticulate/reference/install_python.html" class="external-link">install_python()</a></code> function from <code>reticulate</code> to
+install it.</p>
+<ul>
+<li><a href="https://rstudio.github.io/reticulate/reference/install_python.html" class="external-link uri">https://rstudio.github.io/reticulate/reference/install_python.html</a></li>
+</ul>
+<p>If python is already installed, by default, <code>reticulate</code>
+uses the version of Python found on your <code>PATH</code></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.which.html" class="external-link">Sys.which</a></span><span class="op">(</span><span class="st">"python3"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                                             python3 </span></span>
+<span><span class="co">## "/opt/homebrew/Caskroom/miniforge/base/bin/python3"</span></span></code></pre>
+<p>The <code><a href="https://rstudio.github.io/reticulate/reference/use_python.html" class="external-link">use_python()</a></code> function enables you to specify an
+alternate version, for example:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/use_python.html" class="external-link">use_python</a></span><span class="op">(</span><span class="st">"/usr/&lt;new&gt;/&lt;path&gt;/local/bin/python"</span><span class="op">)</span></span></code></pre></div>
+<p>For example, I can define the path explicitly:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/use_python.html" class="external-link">use_python</a></span><span class="op">(</span><span class="st">"/opt/homebrew/Caskroom/miniforge/base/bin/python"</span>, required <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>You can confirm that <code>reticulate</code> is using the correct
+version of python that you requested:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/py_discover_config.html" class="external-link">py_discover_config</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## python:         /opt/homebrew/Caskroom/miniforge/base/bin/python</span></span>
+<span><span class="co">## libpython:      /opt/homebrew/Caskroom/miniforge/base/lib/libpython3.9.dylib</span></span>
+<span><span class="co">## pythonhome:     /opt/homebrew/Caskroom/miniforge/base:/opt/homebrew/Caskroom/miniforge/base</span></span>
+<span><span class="co">## version:        3.9.10 | packaged by conda-forge | (main, Feb  1 2022, 21:27:43)  [Clang 11.1.0 ]</span></span>
+<span><span class="co">## numpy:          /opt/homebrew/Caskroom/miniforge/base/lib/python3.9/site-packages/numpy</span></span>
+<span><span class="co">## numpy_version:  1.23.0</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## NOTE: Python version was forced by use_python function</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="calling-python-in-r">Calling Python in R<a class="anchor" aria-label="anchor" href="#calling-python-in-r"></a>
+</h3>
+<p>There are a variety of ways to integrate Python code into your R
+projects:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Python in R Markdown</strong> — A new Python language
+engine for R Markdown that supports bi-directional communication between
+R and Python (R chunks can access Python objects and
+vice-versa).</p></li>
+<li><p><strong>Importing Python modules</strong> — The
+<code><a href="https://rstudio.github.io/reticulate/reference/import.html" class="external-link">import()</a></code> function enables you to import any Python module
+and call its functions directly from R.</p></li>
+<li><p><strong>Sourcing Python scripts</strong> — The
+<code><a href="https://rstudio.github.io/reticulate/reference/source_python.html" class="external-link">source_python()</a></code> function enables you to source a Python
+script the same way you would <code><a href="https://rdrr.io/r/base/source.html" class="external-link">source()</a></code> an R script (Python
+functions and objects defined within the script become directly
+available to the R session).</p></li>
+<li><p><strong>Python REPL</strong> — The <code><a href="https://rstudio.github.io/reticulate/reference/repl_python.html" class="external-link">repl_python()</a></code>
+function creates an interactive Python console within R. Objects you
+create within Python are available to your R session (and
+vice-versa).</p></li>
+</ol>
+<p>Below I will focus on introducing the first and last one. However,
+before we do that, let’s introduce a bit about python basics.</p>
+</div>
+<div class="section level3">
+<h3 id="python-basics">Python basics<a class="anchor" aria-label="anchor" href="#python-basics"></a>
+</h3>
+<p>Python is a <strong>high-level</strong>, <strong>object-oriented
+programming</strong> language useful to know for anyone analyzing data.
+The most important thing to know before learning Python, is that in
+Python, everything is an <strong>object</strong>. There is no compiling
+and no need to define the type of variables before using them. No need
+to allocate memory for variables. The code is very easy to learn and
+easy to read (syntax).</p>
+<p>There is a large scientific community contributing to Python. Some of
+the most widely used libraries in Python are <code>numpy</code>,
+<code>scipy</code>, <code>pandas</code>, and
+<code>matplotlib</code>.</p>
+<div class="section level4">
+<h4 id="start-python">start python<a class="anchor" aria-label="anchor" href="#start-python"></a>
+</h4>
+<p>There are two modes you can write Python code in: <strong>interactive
+mode</strong> or <strong>script mode</strong>. If you open up a UNIX
+command window and have a command-line interface, you can simply type
+<code>python</code> (or <code>python3</code>) in the shell:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span></span></code></pre></div>
+<p>and the <strong>interactive mode</strong> will open up. You can write
+code in the interactive mode and Python will <em>interpret</em> the code
+using the <strong>python interpreter</strong>.</p>
+<p>Another way to pass code to Python is to store code in a file ending
+in <code>.py</code>, and execute the file in the <strong>script
+mode</strong> using</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> myscript.py</span></code></pre></div>
+<p>To check what version of Python you are using, type the following in
+the shell:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">--version</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="python-engine-within-r-markdown">Python engine within R Markdown<a class="anchor" aria-label="anchor" href="#python-engine-within-r-markdown"></a>
+</h3>
+<p>The <code>reticulate</code> package includes a Python engine for R
+Markdown with the following features:</p>
+<ol style="list-style-type: decimal">
+<li><p>Run Python chunks in a single Python session embedded within your
+R session (shared variables/state between Python chunks)</p></li>
+<li><p>Printing of Python output, including graphical output from
+<code>matplotlib</code>.</p></li>
+<li><p>Access to objects created within Python chunks from R using the
+<code>py</code> object (e.g. <code>py$x</code> would access an
+<code>x</code> variable created within Python from R).</p></li>
+<li><p>Access to objects created within R chunks from Python using the
+<code>r</code> object (e.g. <code>r.x</code> would access to
+<code>x</code> variable created within R from Python)</p></li>
+</ol>
+<p>Built in conversion for many Python object types is provided,
+including <a href="https://numpy.org" class="external-link">NumPy</a> arrays and <a href="https://pandas.pydata.org" class="external-link">Pandas</a> data frames.</p>
+</div>
+<div class="section level3">
+<h3 id="from-python-to-r">From Python to R<a class="anchor" aria-label="anchor" href="#from-python-to-r"></a>
+</h3>
+<p>As an example, you can use Pandas to read and manipulate data then
+easily plot the Pandas data frame using <code>ggplot2</code>:</p>
+<p>Let’s first create a <code>flights.csv</code> dataset in R:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># checks to see if a folder called "data" exists; if not, it installs it</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># checks to see if a file called "flights.csv" exists; if not, it saves it to the data folder</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"flights.csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/flights.html" class="external-link">flights</a></span>, </span>
+<span>                   file <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"flights.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/flights.html" class="external-link">flights</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 19</span></span></span>
+<span><span class="co">##    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>  <span style="text-decoration: underline;">2</span>013     1     1      517            515         2      830            819</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span>  <span style="text-decoration: underline;">2</span>013     1     1      533            529         4      850            830</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span>  <span style="text-decoration: underline;">2</span>013     1     1      542            540         2      923            850</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span>  <span style="text-decoration: underline;">2</span>013     1     1      544            545        -<span style="color: #BB0000;">1</span>     <span style="text-decoration: underline;">1</span>004           <span style="text-decoration: underline;">1</span>022</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span>  <span style="text-decoration: underline;">2</span>013     1     1      554            600        -<span style="color: #BB0000;">6</span>      812            837</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span>  <span style="text-decoration: underline;">2</span>013     1     1      554            558        -<span style="color: #BB0000;">4</span>      740            728</span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></span></span></code></pre>
+<p>Use Python to read in the file and do some data wrangling</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>flights_path <span class="op">=</span> <span class="st">"/Users/stephaniehicks/Documents/github/teaching/cshlgsd2022/data/flights.csv"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> pandas.read_csv(flights_path)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> flights[flights[<span class="st">'dest'</span>] <span class="op">==</span> <span class="st">"ORD"</span>]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> flights[[<span class="st">'carrier'</span>, <span class="st">'dep_delay'</span>, <span class="st">'arr_delay'</span>]]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>flights <span class="op">=</span> flights.dropna()</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>flights</span></code></pre></div>
+<pre><code><span><span class="co">##        carrier  dep_delay  arr_delay</span></span>
+<span><span class="co">## 5           UA       -4.0       12.0</span></span>
+<span><span class="co">## 9           AA       -2.0        8.0</span></span>
+<span><span class="co">## 25          MQ        8.0       32.0</span></span>
+<span><span class="co">## 38          AA       -1.0       14.0</span></span>
+<span><span class="co">## 57          AA       -4.0        4.0</span></span>
+<span><span class="co">## ...        ...        ...        ...</span></span>
+<span><span class="co">## 336645      AA      -12.0      -37.0</span></span>
+<span><span class="co">## 336669      UA       -7.0      -13.0</span></span>
+<span><span class="co">## 336675      MQ       -7.0      -11.0</span></span>
+<span><span class="co">## 336696      B6       -5.0      -23.0</span></span>
+<span><span class="co">## 336709      AA      -13.0      -38.0</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## [16566 rows x 3 columns]</span></span></code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">py</span><span class="op">$</span><span class="va">flights</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    carrier dep_delay arr_delay</span></span>
+<span><span class="co">## 5       UA        -4        12</span></span>
+<span><span class="co">## 9       AA        -2         8</span></span>
+<span><span class="co">## 25      MQ         8        32</span></span>
+<span><span class="co">## 38      AA        -1        14</span></span>
+<span><span class="co">## 57      AA        -4         4</span></span>
+<span><span class="co">## 70      UA         9        20</span></span></code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">py</span><span class="op">$</span><span class="va">flights_path</span> </span></code></pre></div>
+<pre><code><span><span class="co">## [1] "/Users/stephaniehicks/Documents/github/teaching/cshlgsd2022/data/flights.csv"</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">py</span><span class="op">$</span><span class="va">flights</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "data.frame"</span></span></code></pre>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">py</span><span class="op">$</span><span class="va">flights_path</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "character"</span></span></code></pre>
+<p>Next, we can use R to visualize the Pandas <code>DataFrame</code>.
+The data frame is loaded in as an R object now stored in the variable
+<code>py</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">py</span><span class="op">$</span><span class="va">flights</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carrier</span>, y <span class="op">=</span> <span class="va">arr_delay</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="adv-spatial-01_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p>Note that the <code>reticulate</code> Python engine is enabled by
+default within R Markdown whenever <code>reticulate</code> is
+installed.</p>
+<div class="section level4">
+<h4 id="from-r-to-python">From R to Python<a class="anchor" aria-label="anchor" href="#from-r-to-python"></a>
+</h4>
+<p>Use R to read and manipulate data</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="va">flights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"flights.csv"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dest</span> <span class="op">==</span> <span class="st">"ORD"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">carrier</span>, <span class="va">dep_delay</span>, <span class="va">arr_delay</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">flights</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 16,566 × 3</span></span></span>
+<span><span class="co">##    carrier dep_delay arr_delay</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> UA             -<span style="color: #BB0000;">4</span>        12</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> AA             -<span style="color: #BB0000;">2</span>         8</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> MQ              8        32</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> AA             -<span style="color: #BB0000;">1</span>        14</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> AA             -<span style="color: #BB0000;">4</span>         4</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> UA              9        20</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> UA              2        21</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> AA             -<span style="color: #BB0000;">6</span>       -<span style="color: #BB0000;">12</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> MQ             39        49</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> B6             -<span style="color: #BB0000;">2</span>        15</span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 16,556 more rows</span></span></span></code></pre>
+</div>
+<div class="section level4">
+<h4 id="use-python-to-print-r-dataframe">Use Python to print R dataframe<a class="anchor" aria-label="anchor" href="#use-python-to-print-r-dataframe"></a>
+</h4>
+<p>If you recall, we can access objects created within R chunks from
+Python using the <code>r</code> object (e.g. <code>r.x</code> would
+access to <code>x</code> variable created within R from Python). We can
+then ask for the first ten rows using the <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> function
+in python.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>r.flights.head(<span class="dv">10</span>)</span></code></pre></div>
+<pre><code><span><span class="co">##   carrier  dep_delay  arr_delay</span></span>
+<span><span class="co">## 0      UA       -4.0       12.0</span></span>
+<span><span class="co">## 1      AA       -2.0        8.0</span></span>
+<span><span class="co">## 2      MQ        8.0       32.0</span></span>
+<span><span class="co">## 3      AA       -1.0       14.0</span></span>
+<span><span class="co">## 4      AA       -4.0        4.0</span></span>
+<span><span class="co">## 5      UA        9.0       20.0</span></span>
+<span><span class="co">## 6      UA        2.0       21.0</span></span>
+<span><span class="co">## 7      AA       -6.0      -12.0</span></span>
+<span><span class="co">## 8      MQ       39.0       49.0</span></span>
+<span><span class="co">## 9      B6       -2.0       15.0</span></span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="import-python-modules">import python modules<a class="anchor" aria-label="anchor" href="#import-python-modules"></a>
+</h3>
+<p>You can use the <code><a href="https://rstudio.github.io/reticulate/reference/import.html" class="external-link">import()</a></code> function to import any Python
+module and call it from R. For example, this code imports the Python
+<code>os</code> module in python and calls the <code>listdir()</code>
+function:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">os</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/import.html" class="external-link">import</a></span><span class="op">(</span><span class="st">"os"</span><span class="op">)</span></span>
+<span><span class="va">os</span><span class="op">$</span><span class="fu">listdir</span><span class="op">(</span><span class="st">"."</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] ".Rhistory"                "intro-single-cell-01.Rmd"</span></span>
+<span><span class="co">## [3] "intro-single-cell-02.Rmd" "adv-spatial-01.Rmd"      </span></span>
+<span><span class="co">## [5] "intro-spatial-01.Rmd"     ".DS_Store"               </span></span>
+<span><span class="co">## [7] "cshlgsd2022.Rmd"          "figures"                 </span></span>
+<span><span class="co">## [9] "adv-single-cell-01.Rmd"</span></span></code></pre>
+<p>Functions and other data within Python modules and classes can be
+accessed via the <code>$</code> operator (analogous to the way you would
+interact with an R list, environment, or reference class).</p>
+<p>Imported Python modules support code completion and inline help:</p>
+<div class="figure" style="text-align: center">
+<img src="https://rstudio.github.io/reticulate/images/reticulate_completion.png" alt="Using reticulate tab completion"><p class="caption">
+Using reticulate tab completion
+</p>
+</div>
+<p>[<strong>Source</strong>: <a href="https://rstudio.github.io/reticulate" class="external-link">Rstudio</a>]</p>
+<p>Similarly, we can import the pandas library:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/import.html" class="external-link">import</a></span><span class="op">(</span><span class="st">'pandas'</span><span class="op">)</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="va">pd</span><span class="op">$</span><span class="fu">read_csv</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"flights.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   year month day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span></span>
+<span><span class="co">## 1 2013     1   1      517            515         2      830            819</span></span>
+<span><span class="co">## 2 2013     1   1      533            529         4      850            830</span></span>
+<span><span class="co">## 3 2013     1   1      542            540         2      923            850</span></span>
+<span><span class="co">## 4 2013     1   1      544            545        -1     1004           1022</span></span>
+<span><span class="co">## 5 2013     1   1      554            600        -6      812            837</span></span>
+<span><span class="co">## 6 2013     1   1      554            558        -4      740            728</span></span>
+<span><span class="co">##   arr_delay carrier flight tailnum origin dest air_time distance hour minute</span></span>
+<span><span class="co">## 1        11      UA   1545  N14228    EWR  IAH      227     1400    5     15</span></span>
+<span><span class="co">## 2        20      UA   1714  N24211    LGA  IAH      227     1416    5     29</span></span>
+<span><span class="co">## 3        33      AA   1141  N619AA    JFK  MIA      160     1089    5     40</span></span>
+<span><span class="co">## 4       -18      B6    725  N804JB    JFK  BQN      183     1576    5     45</span></span>
+<span><span class="co">## 5       -25      DL    461  N668DN    LGA  ATL      116      762    6      0</span></span>
+<span><span class="co">## 6        12      UA   1696  N39463    EWR  ORD      150      719    5     58</span></span>
+<span><span class="co">##              time_hour</span></span>
+<span><span class="co">## 1 2013-01-01T10:00:00Z</span></span>
+<span><span class="co">## 2 2013-01-01T10:00:00Z</span></span>
+<span><span class="co">## 3 2013-01-01T10:00:00Z</span></span>
+<span><span class="co">## 4 2013-01-01T10:00:00Z</span></span>
+<span><span class="co">## 5 2013-01-01T11:00:00Z</span></span>
+<span><span class="co">## 6 2013-01-01T10:00:00Z</span></span></code></pre>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "data.frame"</span></span></code></pre>
+<p>or the scikit-learn python library:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">skl_lr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rstudio.github.io/reticulate/reference/import.html" class="external-link">import</a></span><span class="op">(</span><span class="st">"sklearn.linear_model"</span><span class="op">)</span></span>
+<span><span class="va">skl_lr</span></span></code></pre></div>
+<pre><code><span><span class="co">## Module(sklearn.linear_model)</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="calling-python-scripts">Calling python scripts<a class="anchor" aria-label="anchor" href="#calling-python-scripts"></a>
+</h3>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/source_python.html" class="external-link">source_python</a></span><span class="op">(</span><span class="st">"secret_functions.py"</span><span class="op">)</span></span>
+<span><span class="va">subject_1</span> <span class="op">&lt;-</span> <span class="fu">read_subject</span><span class="op">(</span><span class="st">"secret_data.csv"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="calling-the-python-repl">Calling the python repl<a class="anchor" aria-label="anchor" href="#calling-the-python-repl"></a>
+</h3>
+<p>If you want to work with Python interactively you can call the
+<code><a href="https://rstudio.github.io/reticulate/reference/repl_python.html" class="external-link">repl_python()</a></code> function, which provides a Python REPL
+embedded within your R session.</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rstudio.github.io/reticulate/reference/repl_python.html" class="external-link">repl_python</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Objects created within the Python REPL can be accessed from R using
+the <code>py</code> object exported from <code>reticulate</code>. For
+example:</p>
+<div class="figure" style="text-align: center">
+<img src="https://rstudio.github.io/reticulate/images/python_repl.png" alt="Using the repl_python() function"><p class="caption">
+Using the repl_python() function
+</p>
+</div>
+<p>[<strong>Source</strong>: <a href="https://rstudio.github.io/reticulate" class="external-link">Rstudio</a>]</p>
+<p>i.e. objects do have permenancy in R after exiting the python
+repl.</p>
+<p>So typing <code>x = 4</code> in the repl will put <code>py$x</code>
+as 4 in R after you exit the repl.</p>
+<p>Enter exit within the Python REPL to return to the R prompt.</p>
+</div>
+</div>
+<div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.2.1 (2022-06-23)</span></span>
 <span><span class="co">## Platform: aarch64-apple-darwin21.5.0 (64-bit)</span></span>
@@ -126,15 +569,31 @@ Hicks</h4>
 <span><span class="co">## attached base packages:</span></span>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
+<span><span class="co">## other attached packages:</span></span>
+<span><span class="co">##  [1] reticulate_1.25 forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9    </span></span>
+<span><span class="co">##  [5] purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.7   </span></span>
+<span><span class="co">##  [9] ggplot2_3.3.6   tidyverse_1.3.1 here_1.0.1     </span></span>
+<span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] rprojroot_2.0.3   digest_0.6.29     R6_2.5.1          jsonlite_1.8.0   </span></span>
-<span><span class="co">##  [5] magrittr_2.0.3    evaluate_0.15     stringi_1.7.6     rlang_1.0.3      </span></span>
-<span><span class="co">##  [9] cachem_1.0.6      cli_3.3.0         rstudioapi_0.13   fs_1.5.2         </span></span>
-<span><span class="co">## [13] jquerylib_0.1.4   bslib_0.3.1       ragg_1.2.2        rmarkdown_2.14   </span></span>
-<span><span class="co">## [17] pkgdown_2.0.5     textshaping_0.3.6 desc_1.4.1        tools_4.2.1      </span></span>
-<span><span class="co">## [21] stringr_1.4.0     purrr_0.3.4       yaml_2.3.5        xfun_0.31        </span></span>
-<span><span class="co">## [25] fastmap_1.1.0     compiler_4.2.1    systemfonts_1.0.4 memoise_2.0.1    </span></span>
-<span><span class="co">## [29] htmltools_0.5.2   knitr_1.39        sass_0.4.1</span></span></code></pre>
+<span><span class="co">##  [1] httr_1.4.3         sass_0.4.1         bit64_4.0.5        vroom_1.5.7       </span></span>
+<span><span class="co">##  [5] jsonlite_1.8.0     modelr_0.1.8       bslib_0.3.1        assertthat_0.2.1  </span></span>
+<span><span class="co">##  [9] highr_0.9          cellranger_1.1.0   yaml_2.3.5         nycflights13_1.0.2</span></span>
+<span><span class="co">## [13] pillar_1.7.0       backports_1.4.1    lattice_0.20-45    glue_1.6.2        </span></span>
+<span><span class="co">## [17] digest_0.6.29      rvest_1.0.2        colorspace_2.0-3   htmltools_0.5.2   </span></span>
+<span><span class="co">## [21] Matrix_1.4-1       pkgconfig_2.0.3    broom_1.0.0        haven_2.5.0       </span></span>
+<span><span class="co">## [25] scales_1.2.0       tzdb_0.3.0         generics_0.1.3     farver_2.1.0      </span></span>
+<span><span class="co">## [29] ellipsis_0.3.2     cachem_1.0.6       withr_2.5.0        cli_3.3.0         </span></span>
+<span><span class="co">## [33] magrittr_2.0.3     crayon_1.5.1       readxl_1.4.0       memoise_2.0.1     </span></span>
+<span><span class="co">## [37] evaluate_0.15      fs_1.5.2           fansi_1.0.3        xml2_1.3.3        </span></span>
+<span><span class="co">## [41] textshaping_0.3.6  tools_4.2.1        hms_1.1.1          lifecycle_1.0.1   </span></span>
+<span><span class="co">## [45] munsell_0.5.0      reprex_2.0.1       compiler_4.2.1     pkgdown_2.0.5     </span></span>
+<span><span class="co">## [49] jquerylib_0.1.4    systemfonts_1.0.4  rlang_1.0.3        grid_4.2.1        </span></span>
+<span><span class="co">## [53] rstudioapi_0.13    labeling_0.4.2     rmarkdown_2.14     gtable_0.3.0      </span></span>
+<span><span class="co">## [57] DBI_1.1.3          R6_2.5.1           lubridate_1.8.0    knitr_1.39        </span></span>
+<span><span class="co">## [61] fastmap_1.1.0      bit_4.0.4          utf8_1.2.2         rprojroot_2.0.3   </span></span>
+<span><span class="co">## [65] ragg_1.2.2         desc_1.4.1         stringi_1.7.6      parallel_4.2.1    </span></span>
+<span><span class="co">## [69] Rcpp_1.0.8.3       vctrs_0.4.1        png_0.1-7          dbplyr_2.2.1      </span></span>
+<span><span class="co">## [73] tidyselect_1.1.2   xfun_0.31</span></span></code></pre>
 </div>
   </div>
 

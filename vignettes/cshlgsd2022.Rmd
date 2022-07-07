@@ -104,7 +104,7 @@ Please see the [`DESCRIPTION`](https://github.com/stephaniehicks/cshlgsd2022/blo
 | |  |  `r emojifont::emoji('palm_tree')` Lab (Mouse coronal workflow) [[html](https://lmweber.org/OSTA-book/mouse-coronal-workflow.html)] |
 | | 2:25-2:30pm | **Wrap-up; next steps** |
 | | | | 
-|   Jul 7 (9-10:30am)   |  9-9:50am | `r emojifont::emoji('woman_technologist')` Survey of downstream analyses with spatially-resolved transcriptomics data [[slides](https://docs.google.com/presentation/d/1QZlDSuJxXfUaPrun7KkMwntTONTJguFdqsy7Dei5RL0/edit?usp=sharing)] [[html](adv-spatial-01.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/adv-spatial-01.Rmd)] |
+|   Jul 7 (9-10:30am)   |  9-9:50am | `r emojifont::emoji('woman_technologist')` Python for R Users  [[html](adv-spatial-01.html)] [[Rmd](https://github.com/stephaniehicks/cshlgsd2022/blob/main/vignettes/adv-spatial-01.Rmd)] |
 | | 9:50-10am | **10min break** | 
 | | 10-10:30am | **Open question time; Wrap-up** |
 :::

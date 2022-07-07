@@ -22,7 +22,11 @@ Imports:
   hca, 
   scRNAseq,
   SpatialExperiment,
-  STexampleData
+  STexampleData, 
+  here,
+  tidyverse,
+  reticulate,
+  nycflights13
 Suggests:
   pkgdown,
   TENxBrainData
